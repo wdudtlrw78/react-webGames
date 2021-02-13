@@ -9,3 +9,9 @@
 1. 데이터와 화면을 자동으로 일치시키기 위해
 
 1. 유지보수와 재사용을 위한 Component
+
+### JSX
+
+- JSX(Javascript + XML)는 리액트에서 생김새를 정의할 때, 사용하는 문법입니다.
+- 리액트 컴포넌트 파일에서 XML 형태로 코드를 작성하면 babel 이 JSX를 Javascript로 변환을 해줍니다.
+  ![](/images/1.png)
