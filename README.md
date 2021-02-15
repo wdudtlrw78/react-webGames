@@ -45,4 +45,64 @@ this.setState((prevState) => {
 
 ### 함수형 컴포넌트 React Hooks
 
-함수형 컴포넌트에 State, ref, useEffect 추가한 것이 Hooks이다.
+- 함수형 컴포넌트에 State, ref, useEffect 추가한 것이 Hooks이다.
+
+### WebPack
+
+여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
+또한 합치면서 바벨도 적용할 수 있고 쓸데없는 코드들(console.log())등 뺄수도 있다.
+
+기본 config 설정
+
+```
+const path = require('path'); // nodeJs에 지원 (경로 조작)
+
+module.exports = {
+    name: 'wordrelay-setting',
+    mode: 'development', // 실서비스: production
+    devtool: 'eval',
+    resolve: {
+        extensions: ['.js', 'jsx'], // 만약 entry 안에 다양한 js, jsx를 합쳐줄 때 일일이 js, jsx입력해야하는 번거로움 때문에
+    },
+
+    entry: {
+        app: ['./client'],
+    }, // 입력
+
+    module: {
+        reules: [{
+            test: /\.jsx/,
+            loader: 'babel-loader',
+            options: {
+                presets: [
+                    '@babel/preset-env',
+                    '@babel/preset-react',
+                ], //
+                plugins: ['@babel/plugin-proposal-class-properties'],
+            }
+        }],
+    }, // 모듈  적용
+
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'app.js'
+    } // 출력
+};
+```
+
+### npm
+
+```
+npm i react
+npm i react-dom
+npm i webpack
+npm i webpack-cli
+npm i -D @babel/core // 기본 바벨 최신문법
+npm i -D @babel/preset-env // 본인 환경에 맞게 자동으로 옛날 문법으로 변경
+npm i -D @babel/preset-react // React JSX로 변경
+npm i -D babel-loader // 바벨이랑 웹팩 연결
+```
+
+### 후기
+
+보통 react-create-app을 사용하지만 제로초님 강의는 웹팩을 a-z까지 접해볼 수 있어서 기본 원리를 알게되며 거부감이 사라졌다.
