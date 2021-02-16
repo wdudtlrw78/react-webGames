@@ -24,9 +24,11 @@ class NumberBaseball extends Component {
         const { answer, value, tries } = this.state;
         e.preventDefault();
         if (value === answer.join('')) {
-            this.setState({
-                result: '홈런!!',
-                tries: [...tries, {try: value, result: '홈런!'}],
+            this.setState((prevState) => {
+                return {
+                    result: '홈런!!',
+                    tries: [...prevState.tries, {try: value, result: '홈런!'}],
+                }
             })
             this.setState({
                 value: '',
@@ -56,9 +58,11 @@ class NumberBaseball extends Component {
                         ball += 1;
                     }
                 }
-                this.setState({
-                    tries: [...tries, { try: value, result: `${strike}스트라이크 ${ball}볼입니다.`}],
-                    value: '',
+                this.setState((prevState) => {
+                    return {
+                        tries: [...prevState.tries, { try: value, result: `${strike}스트라이크 ${ball}볼입니다.`}],
+                        value: '',
+                    }
                 });
                 
                 this.inputRef.current.focus();
