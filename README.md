@@ -47,6 +47,14 @@ this.setState((prevState) => {
 
 - 함수형 컴포넌트에 State, ref, useEffect 추가한 것이 Hooks이다.
 
+### 불변성 지키기
+
+- 배열, 객체에 변화를 줄 때 불변성을 지켜줘야 한다.
+- `push`, `splice`, `sort` 등의 함수는 지양해야한다. 만약 사용해야 한다면, 기존의 배열을 한 번 복사하고 나서 사용하자
+- 불변성 지키면서 배열에 새 항목 추가하는 방법
+  - spread 연산자
+  - concat 함수
+
 ### WebPack
 
 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
@@ -110,6 +118,16 @@ module.exports = {
 - preset = plugin들의 모음
 
 - hotReLoding = 브라우저 새로고침하면 기존 데이터 다 날라가는 반면에, 핫리로딩을 적용하면 기존 데이터 유지하면서 화면을 변경해준다.
+
+### import와 require
+
+- require = Node의 Module 시스템이다.
+- exports되는 게 객체나 배열이면 구조 분해할 수 있다.
+- ES2015 module 문법 `export const hello = 'hello';` // `import { hello };` // 노드 module문법 = `export.hello = 'hello'`
+- ES2015 module 문법 `export default NumberBaseball;` `import NumberBaseball;` // 노드 module문법 = `module.exports = NumberBaseball;`
+- React정도는 import와 requrie 둘다 어느정도는 호환된다. 깊게들어가면 다르다. require(노드문법)은 default를 별도의 객체로 처리한다.
+- 기본적으로 Node로 Webpack을 돌린다. Node에서는 노드 module문법으로 돌아간다. 하지만, 바벨이 있어서 ES2015 module문법으로 변경해준다. (webpack에서는 노드 문법 require으로 써야한다. )
+- import는 정적 임포트, require는 동적 임포트라는 차이가 있다. import는 항상 파일 상단에, require는 파일 아무데서나 쓸 수 있다.
 
 ### npm
 
