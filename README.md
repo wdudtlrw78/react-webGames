@@ -90,6 +90,8 @@ module.exports = {
 };
 ```
 
+- preset = plugin들의 모음
+
 ### npm
 
 ```
