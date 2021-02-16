@@ -35,16 +35,16 @@ module.exports = {
 
     plugins: [
         new webpack.LoaderOptionsPlugin({ debug: true }),
-        new RefreshWebpackPlugin(), // 핫리로딩
+        new RefreshWebpackPlugin(), // hot-reloading
     ], //확장 프로그램
 
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'app.js'
     }, // 출력
-    
+
     devServer: {
-        publicPath: '/dist',
+        publicPath: '/dist', // 가상 경로 app.use('/dist', express.static(__dirname, '/dist'))
         hot: true,
     }
 };

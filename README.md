@@ -56,41 +56,60 @@ this.setState((prevState) => {
 
 ```
 const path = require('path'); // nodeJs에 지원 (경로 조작)
+const webpack = require('webpack');
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
     name: 'wordrelay-setting',
     mode: 'development', // 실서비스: production
     devtool: 'eval',
     resolve: {
-        extensions: ['.js', 'jsx'], // 만약 entry 안에 다양한 js, jsx를 합쳐줄 때 일일이 js, jsx입력해야하는 번거로움 때문에
+        extensions: ['.js', '.jsx'], // 만약 entry 안에 다양한 js, jsx를 합쳐줄 때 일일이 js, jsx입력해야하는 번거로움 때문에
     },
 
     entry: {
-        app: ['./client'],
+        app: './client',
     }, // 입력
 
     module: {
-        reules: [{
-            test: /\.jsx/,
+        rules: [{
+            test: /\.jsx?$/,
             loader: 'babel-loader',
             options: {
                 presets: [
-                    '@babel/preset-env',
-                    '@babel/preset-react',
+                    ['@babel/preset-env', {
+                        targets: {
+                            browsers: ['> 1% in KR'], // github.com/browerslist
+                        },
+                        debug: true,
+                    }],
+                    '@babel/preset-react'
                 ], //
-                plugins: ['@babel/plugin-proposal-class-properties'],
+                plugins: ['@babel/plugin-proposal-class-properties' , 'react-refresh/babel'],
             }
         }],
-    }, // 모듈  적용
+    }, // 모듈 적용
+
+    plugins: [
+        new webpack.LoaderOptionsPlugin({ debug: true }),
+        new RefreshWebpackPlugin(), // hot-reloading
+    ], //확장 프로그램
 
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'app.js'
-    } // 출력
+    }, // 출력
+
+    devServer: {
+        publicPath: '/dist', // 가상 경로 app.use('/dist', express.static(__dirname, '/dist'))
+        hot: true,
+    }
 };
 ```
 
 - preset = plugin들의 모음
+
+- hotReLoding = 브라우저 새로고침하면 기존 데이터 다 날라가는 반면에, 핫리로딩을 적용하면 기존 데이터 유지하면서 화면을 변경해준다.
 
 ### npm
 
