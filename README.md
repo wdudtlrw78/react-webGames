@@ -244,6 +244,8 @@ npm i -D @babel/core // 기본 바벨 최신문법
 npm i -D @babel/preset-env // 본인 환경에 맞게 자동으로 옛날 문법으로 변경
 npm i -D @babel/preset-react // React JSX로 변경
 npm i -D babel-loader // 바벨이랑 웹팩 연결
+npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D // 핫리로딩
+npm i -D webpack-dev-server // 데브서브
 ```
 
 ### 후기
