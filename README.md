@@ -12,7 +12,7 @@
 
 ### JSX
 
-- JSX(Javascript + XML)는 리액트에서 생김새를 정의할 때, 사용하는 문법입니다.\
+- JSX(Javascript + XML)는 리액트에서 생김새를 정의할 때, 사용하는 문법입니다.
 - 리액트 컴포넌트 파일에서 XML 형태로 코드를 작성하면 babel 이 JSX를 Javascript로 변환을 해줍니다.
   ![](/images/1.png)
 
@@ -54,6 +54,74 @@ this.setState((prevState) => {
 - 불변성 지키면서 배열에 새 항목 추가하는 방법
   - spread 연산자
   - concat 함수
+
+### shouldComponentUpdate, PureComponent와 React.memo
+
+#### 리액트 성능 향상
+
+state랑 props가 바뀌어야 랜더링이 일어난다.
+하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
+
+무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
+
+```
+shouldComponentUpdate(nextProps, nextState, nextCountext) {
+        if (this.state.counter !== nextState.counter) {
+            return true;
+        }
+        return false;
+    }
+```
+
+또는 좀 더 편한 방법으로는 PureComponent와 React.memo가 있다.
+`class Test extends PureComponent` </br>
+`PureComponent`는 `shouldComponentUpdate`의 return 값이 true일지 false일지 자동으로 구현해주는 컴포넌트이다. </br>
+HOW?
+
+```
+class Test extends PureComponent {
+    state = {
+        counter: 0,
+        string: 'hello',
+        number: 1,
+        boolean: true,
+        object: {},
+        array: [],
+    }
+```
+
+state 내부의 값 들이 변경 되었는지 아닌지 그것을 보고 판단한다. 하지만 단점이 있다면
+` object``array ` 객체나 배열같은 복잡한 구조 (참조 관계가 있는 구조) PureComponent도 어려워 한다.
+
+```
+onClick = () => {
+        const array = this.state.array;
+        array.push(1);
+        this.state.array.push(5)
+        this.setState({
+            array: array,
+        });
+    };
+```
+
+예를 들어 위의 예제는 `array`가 변경돠어서 랜더링이 일어나야 하지만 랜더링이 일어나지 않는다. 왜냐하면 `array = array` 가 `true`라서 변경되는 값이 없어서 랜더링이 없는 현상 일어난다. 그래서 항상 `spread` 연산자로 기존 array 펼치고 새로운 array 값을 넣어야한다.
+
+##### Point
+
+`PureComponent`와 `React.memo`는 `props`가 변화가 없으면 일정한 결과를 리턴하므로 다시 랜더링 하지 않는다. 자식이 모두 PureComponent-> 부모도 PureComponent 대상이 될 수 있으며 반대로 부모가 PureComponent-> 자식이 모두 PureComponent 대상이 될 수 있다.
+
+```
+onClick = () => {
+        const array = this.state.array;
+        array.push(1);
+        this.setState({
+          array: [...this.state.array, 1]
+        })
+        });
+    };
+```
+
+주의해야 할 점은 state 안의 값을 `array: [{{3}}]` 배열안의 객체 또 그 안에 객체 이런식의 객체구조는 좋지 않아서 사용하지 말자.
 
 ### WebPack
 

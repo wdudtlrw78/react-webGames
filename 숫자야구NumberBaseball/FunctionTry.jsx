@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-const FunctionTry = ({ tryInfo }) => {
+const FunctionTry = memo(({ tryInfo }) => {
     return (
         <li>
             <div>{tryInfo.try} / {tryInfo.result}</div>
         </li>
     )
-}
+});
 
 export default FunctionTry;

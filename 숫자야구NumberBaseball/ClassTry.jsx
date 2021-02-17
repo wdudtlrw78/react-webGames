@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class ClassTry extends Component {
+class ClassTry extends PureComponent {
     render() {
+        const { tryInfo } = this.props;
         return (
             <li>
-                <div>{this.props.tryInfo.try} / {this.props.tryInfo.result}</div>
+                <div>{tryInfo.try}</div>
+                <div>{tryInfo.result}</div>
             </li>
         )
     }

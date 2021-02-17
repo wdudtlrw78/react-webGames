@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import ClassTry from './ClassTry';
 
 function getNumbers() {
@@ -12,7 +12,7 @@ function getNumbers() {
     return array;
 }
 
-class NumberBaseball extends Component {
+class NumberBaseball extends PureComponent {
     state = {
         result: '',
         value: '',

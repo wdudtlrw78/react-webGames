@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useRef, memo } from 'react';
 import FunctionTry from './FunctionTry';
 
 function getNumbers() {
@@ -9,11 +9,10 @@ function getNumbers() {
         const randomNumber = candidate.splice(Math.floor(Math.random() * [candidate.length - i]), 1)[0];
         array.push(randomNumber);
     }
-    console.log(array);
     return array;
 }
 
-const FunctionNumberBaseball = () => {
+const FunctionNumberBaseball = memo(() => {
     const [result, setResult] = useState('');
     const [value, setValue] = useState('');
     const [answer, setAnswer] = useState(getNumbers());
@@ -63,6 +62,7 @@ const FunctionNumberBaseball = () => {
         console.log(answer);
         setValue(e.target.value);
     }
+    
     return (
         <>
         <h1>{result}</h1>
@@ -80,6 +80,6 @@ const FunctionNumberBaseball = () => {
         </ul>
         </>
     )
-}
+})
 
 export default FunctionNumberBaseball;
