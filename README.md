@@ -123,6 +123,42 @@ onClick = () => {
 
 주의해야 할 점은 state 안의 값을 `array: [{{3}}]` 배열안의 객체 또 그 안에 객체 이런식의 객체구조는 좋지 않아서 사용하지 말자.
 
+### props와 state 연결
+
+- 부모로 부터 받은 `props`는 값 변경 불가능하다.
+
+```
+const FunctionTry = memo(({ tryInfo }) => {
+    tryInfo.try = 'Hello'; // X
+    return (
+        <li>
+            <div>{tryInfo.try} / {tryInfo.result}</div>
+        </li>
+    )
+});
+```
+
+- `porps`는 부모에서 변경해주어야 한다.
+- 하지만 실무에서 등 부모로 부터 받은 `props`를 변경해주어야 하는 경우가 생긴다.
+  - props를 state 에 넣어준다. 그래야 부모한테 영향을 미치지 않는다.
+
+```
+const FunctionTry = memo(({ tryInfo }) => {
+    const [result, setResult] = useState(tryInfo.result);
+
+    const onClick = () => {
+        setResult('1');
+    }
+
+    return (
+        <li>
+            <div>{tryInfo.try}</div>
+            <div>{result}</div>
+        </li>
+    )
+});
+```
+
 ### WebPack
 
 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.

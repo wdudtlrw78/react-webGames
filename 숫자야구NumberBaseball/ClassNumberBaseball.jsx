@@ -78,7 +78,6 @@ class NumberBaseball extends PureComponent {
     }
 
     
-
     inputRef = createRef();
 
     render() {
