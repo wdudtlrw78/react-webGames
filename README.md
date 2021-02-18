@@ -18,7 +18,7 @@
 
 ### 함수형 setState
 
-setState는 비동기(asynchronous)입니다.
+- setState는 비동기(asynchronous)입니다.
 
 ```
 tihs.setState({
@@ -59,10 +59,10 @@ this.setState((prevState) => {
 
 #### 리액트 성능 향상
 
-state랑 props가 바뀌어야 랜더링이 일어난다.
-하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
+- state랑 props가 바뀌어야 랜더링이 일어난다.
+  하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
 
-무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
+- 무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
 
 ```
 shouldComponentUpdate(nextProps, nextState, nextCountext) {
@@ -159,10 +159,15 @@ const FunctionTry = memo(({ tryInfo }) => {
 });
 ```
 
+### useRef
+
+- useRef) current로 접근해야 하며 값이 변경돼도 랜더링이 되지않음
+- useState) 값이 변경되면 랜더링이 됨
+
 ### WebPack
 
-여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
-또한 합치면서 바벨도 적용할 수 있고 쓸데없는 코드들(console.log())등 뺄수도 있다.
+- 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
+  또한 합치면서 바벨도 적용할 수 있고 쓸데없는 코드들(console.log())등 뺄수도 있다.
 
 기본 config 설정
 
