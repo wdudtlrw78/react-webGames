@@ -164,6 +164,21 @@ const FunctionTry = memo(({ tryInfo }) => {
 - useRef) current로 접근해야 하며 값이 변경돼도 랜더링이 되지않음
 - useState) 값이 변경되면 랜더링이 됨
 
+### LifeCycle Method (생명주기)
+
+- 브라우저상에 나타나고, 업데이트되고, 사라지게 될 때 호출되는 메서드이다.
+  ![](./images/cNfpEph.png)<br>
+  출처: https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+  <br>
+- `class`: `constructor` -> `render` -> `ref` -> `componentDidMount` -> (`setState`/`props` 바뀔 때) -> `shouldComponentUpdate`(true) -> `render` -> `componentDidupdate`(리렌더링 후))
+  부모가 나를 제거했을 때 -> `componentWillUnmount` -> 소멸
+
+- `componentDidMount()` : 컴포넌트가 첫 렌더링된 후, 비동기 요청(axios, fetch, DOM 속성 읽거나 변경등)을 많이 한다.
+
+- `componentDidUpdate()` : 리렌더링 후 화면에 원하는 변화가 모두 반영되고 난 후 호출
+
+- `componentWillUnmount()` : 컴포넌트가 제거되기 직전에 호출 (DOM에 직접 등록했었던 이벤트 제거, clearTimeout 제거와 같은 비동기 요청 정리한다.)
+
 ### WebPack
 
 - 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
