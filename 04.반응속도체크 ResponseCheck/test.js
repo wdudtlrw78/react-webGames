@@ -3,7 +3,6 @@ const result = document.querySelector('.result');
 
 let startTime;
 let endTimer;
-let record = [];
 let timeOut;
 
 screen.addEventListener('click', () => {
@@ -30,7 +29,6 @@ screen.addEventListener('click', () => {
     } else if (screen.classList.contains('now')) { // 시작상태
         endTime = new Date();
         result.textContent = `반응속도: ${(endTime - startTime) / 1000}ms`
-        record.push(endTime - startTime);
         startTime = null;
         endTime = null;
         screen.classList.remove('now');
