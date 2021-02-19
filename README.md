@@ -170,9 +170,9 @@ const FunctionTry = memo(({ tryInfo }) => {
   ![](./images/cNfpEph.png)<br>
   출처: https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
   <br>
-- `class`: `constructor` -> `render` -> `ref` -> `componentDidMount` -> (`setState`/`props` 바뀔 때) -> `shouldComponentUpdate`(true) -> `render` -> `componentDidupdate`(리렌더링 후))
-  부모가 나를 제거했을 때 -> `componentWillUnmount` -> 소멸
-
+- `class`: `constructor` -> `render` -> `ref` -> `componentDidMount` -> ` setState` or `props ` 바뀔 때 -> `shouldComponentUpdate`(true) -> `render` -> `componentDidupdate`(리렌더링 후)
+- 부모가 나를 제거했을 때 -> `componentWillUnmount` -> 소멸
+  <br>
 - `componentDidMount()` : 컴포넌트가 첫 렌더링된 후, 비동기 요청(axios, fetch, DOM 속성 읽거나 변경등)을 많이 한다.
 
 - `componentDidUpdate()` : 리렌더링 후 화면에 원하는 변화가 모두 반영되고 난 후 호출
