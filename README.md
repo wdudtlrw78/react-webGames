@@ -62,7 +62,7 @@ this.setState((prevState) => {
 - state랑 props가 바뀌어야 랜더링이 일어난다.
   하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
 
-- 무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
+- point - 무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
 
 ```
 shouldComponentUpdate(nextProps, nextState, nextCountext) {
@@ -178,6 +178,45 @@ const FunctionTry = memo(({ tryInfo }) => {
 - `componentDidUpdate()` : 리렌더링 후 화면에 원하는 변화가 모두 반영되고 난 후 호출
 
 - `componentWillUnmount()` : 컴포넌트가 제거되기 직전에 호출 (DOM에 직접 등록했었던 이벤트 제거, clearTimeout 제거와 같은 비동기 요청 정리한다.)
+
+## useEffect
+
+```
+useEffect(() => { // componentDidMount, componentDidUpdate 역할 (1대1 대응은 아님)
+    return () => {} // componentWillUnmount 역할
+}, []); // []은 state가 변경되었을 때마다 (componentDidUpdate) 실행되는 라이프 사이클이다.
+```
+
+- Class와 Hooks의 LifeCycle가 다른방식으로 동작한다.
+- Class의 경우 가로 방식으로 작동한다.
+- Hooks의 경우 세로 방식으로 작동한다.
+
+### example
+
+| -                    | state 1 | state 2 | state 3 |
+| -------------------- | :-----: | :-----: | :-----: |
+| componentDidMount    |    -    |    -    |    -    |
+| componentDidUpdate   |    -    |    -    |    -    |
+| componentWillUnmount |    -    |    -    |    -    |
+
+```
+componentDidMount() {
+  this.setState({
+    state1 : 3,
+    state2 : 1,
+    state3 : 2,
+  })
+}
+
+useEffect({
+  setState1();
+  setState2();
+}, [state1, state2]);
+
+useEffact({
+  setState3();
+}, [state3])
+```
 
 ### WebPack
 
