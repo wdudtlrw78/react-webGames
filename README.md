@@ -184,7 +184,7 @@ const FunctionTry = memo(({ tryInfo }) => {
 ```
 useEffect(() => { // componentDidMount, componentDidUpdate 역할 (1대1 대응은 아님)
     return () => {} // componentWillUnmount 역할
-}, []); // []은 state가 변경되었을 때마다 (componentDidUpdate) 실행되는 라이프 사이클이다.
+}, []); // []은 빈 배열이면 componentDidMount와 동일하고 요소가 있으면 componentDidMount랑 DidUpdate 둘다 수행
 ```
 
 - Class와 Hooks의 LifeCycle가 다른방식으로 동작한다.
@@ -216,6 +216,16 @@ useEffect({
 useEffact({
   setState3();
 }, [state3])
+
+// componentDidUpdate만 하고 싶을때, DidMount X (DidMount 실행은 되지만 아무것도 하지 않는다.)
+const mounted = useRef(false);
+useEffect(() => {
+  if (!mounted.current) {
+    mounted.current = true;
+  } else {
+    // ajax
+  }
+}, [바뀌는 값]) // 바뀌는 값에 따라서 else 부분 실행
 ```
 
 ### WebPack

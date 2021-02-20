@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ClassLottoDraw from './ClassLottoDraw';
+import HooksLottoDraw from './HooksLottoDraw';
 
-ReactDOM.render(<ClassLottoDraw />, document.querySelector('#root'))
+ReactDOM.render(<HooksLottoDraw />, document.querySelector('#root'))
