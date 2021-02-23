@@ -228,6 +228,16 @@ useEffect(() => {
 }, [바뀌는 값]) // 바뀌는 값에 따라서 else 부분 실행
 ```
 
+### useReducer
+
+- state들이 점점 많아지면 관리하기가 번거롭다. 그래서 하나의 state와 setState로 통일하는 것이 useReducer 개념이다.
+
+### reducer, action, dispatch의 관계
+
+- state가 있으면 직접 건드리거나 변경할 수 가 없다.
+- state 변경하고 싶으면 이벤트가 실행 될 때 `action`을 `dispath`해서 state를 변경해야한다.
+- state를 어떻게 바꾸는지는 `reducer`에게 기록을 한다.
+
 ### WebPack
 
 - 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
