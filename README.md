@@ -231,12 +231,13 @@ useEffect(() => {
 ### useReducer
 
 - state들이 점점 많아지면 관리하기가 번거롭다. 그래서 하나의 state와 setState로 통일하는 것이 useReducer 개념이다.
+- `Redux`에서는 동기적으로 실행되지만 `useReducer`에서는 **비동기적으로** 실행되는 차이점이 있다.
 
 ### reducer, action, dispatch의 관계
 
 - state가 있으면 직접 건드리거나 변경할 수 가 없다.
 - state 변경하고 싶으면 이벤트가 실행 될 때 `action`을 `dispath`해서 state를 변경해야한다.
-- state를 어떻게 바꾸는지는 `reducer`에게 기록을 한다.
+- state를 어떻게 바꾸는지는 `reducer`에서 기록을 한다.
 
 ### WebPack
 
@@ -330,3 +331,4 @@ npm i -D webpack-dev-server // 데브서브
 ### 후기
 
 보통 react-create-app을 사용하지만 제로초님 강의는 웹팩을 a-z까지 접해볼 수 있어서 기본 원리를 알게되며 거부감이 사라졌다.
+지뢰찾기는 알고리즘
