@@ -1,6 +1,6 @@
 ## React webGame-zeroCho
 
-#### [제로초 웹 게임으로 배우는 리액트 강좌](https://www.youtube.com/watch?v=V3QsSrldHqI&list=PLcqDmjxt30RtqbStQqk-eYMK8N-1SYIFn&index=1)
+##### [제로초 웹 게임으로 배우는 리액트 강좌](https://www.youtube.com/watch?v=V3QsSrldHqI&list=PLcqDmjxt30RtqbStQqk-eYMK8N-1SYIFn&index=1)
 
 ### React를 왜 쓰는가
 
@@ -57,7 +57,7 @@ this.setState((prevState) => {
 
 ### shouldComponentUpdate, PureComponent와 React.memo
 
-#### 리액트 성능 향상
+##### 리액트 성능 향상
 
 - state랑 props가 바뀌어야 랜더링이 일어난다.
   하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
@@ -179,7 +179,7 @@ const FunctionTry = memo(({ tryInfo }) => {
 
 - `componentWillUnmount()` : 컴포넌트가 제거되기 직전에 호출 (DOM에 직접 등록했었던 이벤트 제거, clearTimeout 제거와 같은 비동기 요청 정리한다.)
 
-## useEffect
+### useEffect
 
 ```
 useEffect(() => { // componentDidMount, componentDidUpdate 역할 (1대1 대응은 아님)
@@ -238,6 +238,42 @@ useEffect(() => {
 - state가 있으면 직접 건드리거나 변경할 수 가 없다.
 - state 변경하고 싶으면 이벤트가 실행 될 때 `action`을 `dispath`해서 state를 변경해야한다.
 - state를 어떻게 바꾸는지는 `reducer`에서 기록을 한다.
+
+### React Router
+
+- Router는 가상의 페이지이며 눈속임이다.
+
+#### 1. Link와 브라우저 라우터(BrowserRouter)
+
+- `a`Tag 대신 `Link`컴포넌트로 `<Link to="/number-baseball">숫자야구</Link>`로 불러준다.
+
+```
+<BrowserRouter>
+  {*/공통 레이아웃 영역*/}
+  <Link to="/number-baseball">숫자야구</Link>
+    <div>
+      <Route path="/number-baseball" component={FunctionNumberBaseball} />
+    </div>
+</BrowserRouter>
+```
+
+- Hooks 문제점 Error 3. You might have more than one copy of React in the same app
+- 이유 2개의 import React 대상이 다르면 문제가 되기 때문이다.
+- Class에서는 문제가 안되기 때문에 Class로 변경해주면 제대로 import가 된다.
+- webpack.config에서 `plugins: ['@babel/plugin-proposal-class-properties']` 설치해주어야 Class 컴포넌트가 호환된다.
+- historyApiFallBack: 히스토리 API를 사용하는 SPA 개발시 설정한다. 404가 발생하면 index.html로 리다이렉트한다.
+
+```
+devServer: {
+        historyApiFallback: true,
+        publicPath: '',
+        hot: true,
+    },
+```
+
+#### 2. 해시라우터, params, withRouter
+
+- [Hooks Route 연동 참조](https://reactrouter.com/web/api/Hooks/usehistory)
 
 ### WebPack
 
@@ -326,6 +362,8 @@ npm i -D @babel/preset-react // React JSX로 변경
 npm i -D babel-loader // 바벨이랑 웹팩 연결
 npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D // 핫리로딩
 npm i -D webpack-dev-server // 데브서브
+npm i react-router
+npm i react-router-dom // web 만약 app이면 native 우리는 router-dom만 쓰면 되며, react-router는 dom이 필요로해서 설치
 ```
 
 ### 후기
