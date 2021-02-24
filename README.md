@@ -4,11 +4,24 @@
 
 ### 목차
 
-1. [React를 왜 쓰는가](#React를-왜-쓰는가)
+1. [React를 왜 쓰는가](#react를-왜-쓰는가)
 2. [JSX](#JSX)
-3. [함수형 setState](#함수형-setState)
+3. [함수형 setState](#함수형-setstate)
+4. [함수형 컴포넌트 React Hooks](#함수형-컴포넌트-react-hooks)
+5. [불변성 지키기](#불변성-지키기)
+6. [shouldComponentUpdate, PureComponent와 React.memo](#shouldcomponentupdate-purecomponent와-reactmemo)
+7. [props와 state 연결](#props와-state-연결)
+8. [useRef](#useref)
+9. [LifeCycle Method (생명주기)](#lifecycle-method-생명주기)
+10. [useEffect](#useeffect)
+11. [useReducer](#usereducer)
+12. [React Router](#react-router)
+13. [ContextAPI](#context-api)
+14. [WebPack](#webpack)
+15. [npm](#npm)
+16. [후기](#후기)
 
-### # React를 왜 쓰는가
+### React를 왜 쓰는가
 
 1. Single Page Application 이며, App과 비슷하게 화면 이동시 깜빡임 없이 자연스럽게 넘어가는 방식이며 즉, 사용자 경험 인터페이스를 만들기 위한 JavaScript 라이브러리 입니다.
 
@@ -16,13 +29,13 @@
 
 1. 유지보수와 재사용을 위한 Component
 
-### # JSX
+### JSX
 
 - JSX(Javascript + XML)는 리액트에서 생김새를 정의할 때, 사용하는 문법입니다.
 - 리액트 컴포넌트 파일에서 XML 형태로 코드를 작성하면 babel 이 JSX를 Javascript로 변환을 해줍니다.
   ![](/images/1.png)
 
-### # 함수형 setState
+### 함수형 setState
 
 - setState는 비동기(asynchronous)입니다.
 
@@ -49,11 +62,11 @@ this.setState((prevState) => {
 })
 ```
 
-### # 함수형 컴포넌트 React Hooks
+### 함수형 컴포넌트 React Hooks
 
 - 함수형 컴포넌트에 State, ref, useEffect 추가한 것이 Hooks이다.
 
-### # 불변성 지키기
+### 불변성 지키기
 
 - 배열, 객체에 변화를 줄 때 불변성을 지켜줘야 한다.
 - `push`, `splice`, `sort` 등의 함수는 지양해야한다. 만약 사용해야 한다면, 기존의 배열을 한 번 복사하고 나서 사용하자
@@ -61,7 +74,7 @@ this.setState((prevState) => {
   - spread 연산자
   - concat 함수
 
-### # shouldComponentUpdate, PureComponent와 React.memo
+### shouldComponentUpdate, PureComponent와 React.memo
 
 ##### 리액트 성능 향상
 
@@ -129,7 +142,7 @@ onClick = () => {
 
 주의해야 할 점은 state 안의 값을 `array: [{{3}}]` 배열안의 객체 또 그 안에 객체 이런식의 객체구조는 좋지 않아서 사용하지 말자.
 
-### # props와 state 연결
+### props와 state 연결
 
 - 부모로 부터 받은 `props`는 값 변경 불가능하다.
 
@@ -165,12 +178,12 @@ const FunctionTry = memo(({ tryInfo }) => {
 });
 ```
 
-### # useRef
+### useRef
 
 - useRef) current로 접근해야 하며 값이 변경돼도 렌더링이 되지않음
 - useState) 값이 변경되면 렌더링이 됨
 
-### # LifeCycle Method (생명주기)
+### LifeCycle Method (생명주기)
 
 - 브라우저상에 나타나고, 업데이트되고, 사라지게 될 때 호출되는 메서드이다.
   ![](./images/cNfpEph.png)<br>
@@ -185,7 +198,7 @@ const FunctionTry = memo(({ tryInfo }) => {
 
 - `componentWillUnmount()` : 컴포넌트가 제거되기 직전에 호출 (DOM에 직접 등록했었던 이벤트 제거, clearTimeout 제거와 같은 비동기 요청 정리한다.)
 
-### # useEffect
+### useEffect
 
 ```
 useEffect(() => { // componentDidMount, componentDidUpdate 역할 (1대1 대응은 아님)
@@ -197,7 +210,7 @@ useEffect(() => { // componentDidMount, componentDidUpdate 역할 (1대1 대응�
 - Class의 경우 가로 방식으로 작동한다.
 - Hooks의 경우 세로 방식으로 작동한다.
 
-### # example
+##### example
 
 | -                    | state 1 | state 2 | state 3 |
 | -------------------- | :-----: | :-----: | :-----: |
@@ -234,18 +247,22 @@ useEffect(() => {
 }, [바뀌는 값]) // 바뀌는 값에 따라서 else 부분 실행
 ```
 
-### # useReducer
+### useReducer
 
 - state들이 점점 많아지면 관리하기가 번거롭다. 그래서 하나의 state와 setState로 통일하는 것이 useReducer 개념이다.
 - `Redux`에서는 동기적으로 실행되지만 `useReducer`에서는 **비동기적으로** 실행되는 차이점이 있다.
 
-### # reducer, action, dispatch의 관계
+### Context API
+
+- 만약 3개 이상의 컴포넌트를 거쳐서 전달 해야 하는 일이 발생한다면 번거롭기 때문에 Context API와 dispatch를 함께 사용하면 복잡한 구조를 해결 할 수 있다.
+
+##### reducer, action, dispatch의 관계
 
 - state가 있으면 직접 건드리거나 변경할 수 가 없다.
 - state 변경하고 싶으면 이벤트가 실행 될 때 `action`을 `dispath`해서 state를 변경해야한다.
 - state를 어떻게 바꾸는지는 `reducer`에서 기록을 한다.
 
-### # React Router
+### React Router
 
 - Router는 가상의 페이지이며 눈속임이다.
 - 실제로 페이지가 바뀌는 것이 아니라 바뀌는 척 하는 것이다.
@@ -373,7 +390,7 @@ let urlSearchParams = new URLSearchParams(this.props.location.search.slice(1)); 
 
 - [Hooks Route 연동 참조](https://reactrouter.com/web/`api/Hooks/usehistory)
 
-### # WebPack
+### WebPack
 
 - 여러개의 자바스크립트 파일들을 전부 합쳐서 하나의 자바스크립트 파일로 만들어주는 기술이다.
   또한 합치면서 바벨도 적용할 수 있고 쓸데없는 코드들(console.log())등 뺄수도 있다.
@@ -437,7 +454,7 @@ module.exports = {
 
 - hotReLoding = 브라우저 새로고침하면 기존 데이터 다 날라가는 반면에, 핫리로딩을 적용하면 기존 데이터 유지하면서 화면을 변경해준다.
 
-### # import와 require
+### import와 require
 
 - require = Node의 Module 시스템이다.
 - exports되는 게 객체나 배열이면 구조 분해할 수 있다.
@@ -447,7 +464,7 @@ module.exports = {
 - 기본적으로 Node로 Webpack을 돌린다. Node에서는 노드 module문법으로 돌아간다. 하지만, 바벨이 있어서 ES2015 module문법으로 변경해준다. (webpack에서는 노드 문법 require으로 써야한다. )
 - import는 정적 임포트, require는 동적 임포트라는 차이가 있다. import는 항상 파일 상단에, require는 파일 아무데서나 쓸 수 있다.
 
-### # npm
+### npm
 
 ```
 npm i react
@@ -463,6 +480,6 @@ npm i -D webpack-dev-server // 데브서브
 npm i react-router-dom // web 만약 app이면 native 자동으로 react-router 설치
 ```
 
-### # 후기
+### 후기
 
 보통 react-create-app을 사용하지만 제로초님 강의는 웹팩을 a-z까지 접해볼 수 있어서 기본 원리를 알게되며 거부감이 사라졌다. 또한 디테일하게 많은 것 들을알려줘서 많은 것을 학습할 수 있었으며 중요한 것은 반복하며 내 것으로 만드는 것이 중요하겠다. 특히 useReducer, ContextAPI는 많이 적용해보며 익숙해질 필요가 있다. 그리고 지뢰찾기 게임에서는 어려운 알고리즘 부분들이 있어 현재는 부족하지만 공부해서 다음에 다시 확인해야겠다.
