@@ -59,10 +59,10 @@ this.setState((prevState) => {
 
 ##### 리액트 성능 향상
 
-- state랑 props가 바뀌어야 랜더링이 일어난다.
-  하지만, setState({}) 빈 값을 호출해도 랜더링이 일어나는 현상이 발생한다.
+- state랑 props가 바뀌어야 렌더링이 일어난다.
+  하지만, setState({}) 빈 값을 호출해도 렌더링이 일어나는 현상이 발생한다.
 
-- point - 무언가가 바뀌는 것이 없으면 랜더링이 일어나지 않게 해야한다.
+- point - 무언가가 바뀌는 것이 없으면 렌더링이 일어나지 않게 해야한다.
 
 ```
 shouldComponentUpdate(nextProps, nextState, nextCountext) {
@@ -104,11 +104,11 @@ onClick = () => {
     };
 ```
 
-예를 들어 위의 예제는 `array`가 변경돠어서 랜더링이 일어나야 하지만 랜더링이 일어나지 않는다. 왜냐하면 `array = array` 가 `true`라서 변경되는 값이 없어서 랜더링이 없는 현상 일어난다. 그래서 항상 `spread` 연산자로 기존 array 펼치고 새로운 array 값을 넣어야한다.
+예를 들어 위의 예제는 `array`가 변경돠어서 렌더링이 일어나야 하지만 렌더링이 일어나지 않는다. 왜냐하면 `array = array` 가 `true`라서 변경되는 값이 없어서 렌더링이 없는 현상 일어난다. 그래서 항상 `spread` 연산자로 기존 array 펼치고 새로운 array 값을 넣어야한다.
 
 ##### Point
 
-`PureComponent`와 `React.memo`는 `props`가 변화가 없으면 일정한 결과를 리턴하므로 다시 랜더링 하지 않는다. 자식이 모두 PureComponent-> 부모도 PureComponent 대상이 될 수 있으며 반대로 부모가 PureComponent-> 자식이 모두 PureComponent 대상이 될 수 있다.
+`PureComponent`와 `React.memo`는 `props`가 변화가 없으면 일정한 결과를 리턴하므로 다시 렌더링 하지 않는다. 자식이 모두 PureComponent-> 부모도 PureComponent 대상이 될 수 있으며 반대로 부모가 PureComponent-> 자식이 모두 PureComponent 대상이 될 수 있다.
 
 ```
 onClick = () => {
@@ -161,8 +161,8 @@ const FunctionTry = memo(({ tryInfo }) => {
 
 ### useRef
 
-- useRef) current로 접근해야 하며 값이 변경돼도 랜더링이 되지않음
-- useState) 값이 변경되면 랜더링이 됨
+- useRef) current로 접근해야 하며 값이 변경돼도 렌더링이 되지않음
+- useState) 값이 변경되면 렌더링이 됨
 
 ### LifeCycle Method (생명주기)
 
@@ -341,6 +341,28 @@ devServer: {
 ```
 let urlSearchParams = new URLSearchParams(this.props.location.search.slice(1)); // slice(1) = ? slice
         console.log(urlSearchParams.get('hello')); // momo
+```
+
+#### 5.render props, switch, exact
+
+- render props: `<Route path="/game/:name" render={(props) => <GameMatcher {...props} />} />` props 전달
+- Switch : Switch태그로 감싸고 있는 Route중에서 일치하는 페이지 빼고 나머지 페이지들은 렌더링 되지 않는다.
+- exact : path 주소가 정확하게 일치하는 경우만 렌더링 될 수 있게 한다. 무슨 말이냐면, Switch에서는 동시에 라우터 여러개 막기 위해서 사용하는데 조심해야 할 점은 상위 주소랑 하위 주소가 있는 경우에는 상위주소의 / 도 일치하는 걸로 알아차려서 렌더링이 같이 된다.
+
+```
+<Switch>
+  <Route path="/" render={(props) => <GameMatcher {...props} />} />
+  <Route path="/game/:name" render={(props) => <GameMatcher {...props} />} />
+</Switch>
+```
+
+- exact 붙인 경우 실제 / 값 만 렌더링 된다.
+
+```
+<Switch>
+  <Route exact path="/" render={(props) => <GameMatcher {...props} />} />
+  <Route path="/game/:name" render={(props) => <GameMatcher {...props} />} />
+</Switch>
 ```
 
 - [Hooks Route 연동 참조](https://reactrouter.com/web/`api/Hooks/usehistory)

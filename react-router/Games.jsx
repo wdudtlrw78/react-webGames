@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Link, Switch } from 'react-router-dom';
 import GameMatcher from './GameMatcher';
 
 const Games = () => {
@@ -14,8 +14,8 @@ const Games = () => {
             &nbsp;
             <Link to="/game/index">게임 매쳐</Link> {/*조건: 2 단어 이상 */}
             <div>
-                <Route path="/game/:name" component={GameMatcher} /> {/* :앞에 붙은 이름들을 파라미터 줄여서 params라고 불리며 : 앞에 값은 동적으로 바뀐다
-                예를 들어서 name에서 numberbaseball이 될 수 있고 lotto-generator가 될 수 있다. */}
+                <Route exact path="/" render={(props) => <GameMatcher {...props} />} />
+                <Route path="/game/:name" render={(props) => <GameMatcher {...props} />} />
             </div>
         </BrowserRouter>
     )
