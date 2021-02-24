@@ -1,22 +1,21 @@
 import React from 'react';
 import { BrowserRouter, HashRouter, Route, Link } from 'react-router-dom';
-import NumberBaseball from '../03.숫자야구NumberBaseball/ClassNumberBaseball';
-import RspClass from '../05.가위바위보RSP/RspClass';
-import ClassLottoDraw from '../06.로또추첨기LottoDraw/ClassLottoDraw';
+import GameMatcher from './GameMatcher';
 
 const Games = () => {
     return (
         <BrowserRouter>
-            공통인 부분 {/*공통인 레이아웃*/}
-            <Link to="/number-baseball">숫자야구</Link>
+            공통 레이아웃 {/*공통인 레이아웃*/}
+            <Link to="/game/number-baseball?query=10&hello=momo&bye=react">숫자야구</Link>
             &nbsp;
-            <Link to="/rock-scissors-paper">가위바위보</Link>
+            <Link to="/game/rock-scissors-paper">가위바위보</Link>
             &nbsp;
-            <Link to="/lotto-generator">로또생성기</Link>
+            <Link to="/game/lotto-generator">로또생성기</Link>
+            &nbsp;
+            <Link to="/game/index">게임 매쳐</Link> {/*조건: 2 단어 이상 */}
             <div>
-                <Route path="/number-baseball" component={NumberBaseball} />
-                <Route path="/rock-scissors-paper" component={RspClass} />
-                <Route path="/lotto-generator" component={ClassLottoDraw} />
+                <Route path="/game/:name" component={GameMatcher} /> {/* :앞에 붙은 이름들을 파라미터 줄여서 params라고 불리며 : 앞에 값은 동적으로 바뀐다
+                예를 들어서 name에서 numberbaseball이 될 수 있고 lotto-generator가 될 수 있다. */}
             </div>
         </BrowserRouter>
     )

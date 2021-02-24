@@ -242,6 +242,7 @@ useEffect(() => {
 ### React Router
 
 - Router는 가상의 페이지이며 눈속임이다.
+- 실제로 페이지가 바뀌는 것이 아니라 바뀌는 척 하는 것이다.
 
 #### 1. Link와 브라우저 라우터(BrowserRouter)
 
@@ -273,7 +274,76 @@ devServer: {
 
 #### 2. 해시라우터, params, withRouter
 
-- [Hooks Route 연동 참조](https://reactrouter.com/web/api/Hooks/usehistory)
+- 주소창에 http://localhost:8080/#/number-baseball 중간에 # 확인할 수 있다.
+- 브라우저 라우터는 주소창이 깔끔한 대신 새로고침 하면 서버에 요청(브라우저 모름)이가서 모른다고 답한다.(서버쪽의 셋팅을 했다는 전제하에 검색 엔진에게 알려준다.) 예를 들어 검색 엔진에게 알려주려면 가위바위보 , 로또추첨기, 숫자야구의 페이지가 존재한다는 것을 서버쪽에서 셋팅을 해야된다.
+- 해시라우터는 새로고침해도 동작이 된다. 이유는 # 뒤에 부분이 브라우저만(서버는 모름) 아는부분이다. 반대로 브라우저 라우터는 뒤에 부분을 인식을 못한다.
+- 단점은 SEO [search engine optimization](https://ko.wikipedia.org/wiki/%EA%B2%80%EC%83%89_%EC%97%94%EC%A7%84_%EC%B5%9C%EC%A0%81%ED%99%94) 검색 엔진 최적화할 때 서버에서 모른다고 응답하기 때문에 검색 엔진에 안뜬다. 그래서 실무에선 검색 엔진이 중요해서 잘 쓰이지 않는다.
+
+**만약 Route가 많아져서 관리하기 힘들 때 다이나믹 라우트 매칭을 이용한다. (동적 라우트 매칭)**
+
+- `path`의 :앞에 붙은 이름들을 파라미터 줄여서 params라고 불리며 : 앞에 값은 *동적*으로 바뀐다. 예를 들어서 name에서 numberbaseball이 될 수 있고 lotto-generator가 될 수 있다.
+
+```
+        <BrowserRouter>
+            공통인 부분 {/*공통인 레이아웃*/}
+            <Link to="/number-baseball">숫자야구</Link>
+            &nbsp;
+            <Link to="/rock-scissors-paper">가위바위보</Link>
+            &nbsp;
+            <Link to="/lotto-generator">로또생성기</Link>
+            &nbsp;
+            <Link to="/game/index">게임 매쳐</Link> {/*조건: 2 단어 이상 */}
+            <div>
+                <Route path="/number-baseball" component={NumberBaseball} />
+                <Route path="/rock-scissors-paper" component={RspClass} />
+                <Route path="/lotto-generator" component={ClassLottoDraw} />
+                <Route path="/game/:name" component={GameMatcher} />
+            </div>
+        </BrowserRouter>
+```
+
+동적 라우트 매칭을 이용하면 다음과 같이 하나의 라우트로 관리 할 수 있다.
+
+```
+        <BrowserRouter>
+            공통인 부분 {/*공통인 레이아웃*/}
+            <Link to="/game/number-baseball">숫자야구</Link>
+            &nbsp;
+            <Link to="/game/rock-scissors-paper">가위바위보</Link>
+            &nbsp;
+            <Link to="/game/lotto-generator">로또생성기</Link>
+            &nbsp;
+            <Link to="/game/index">게임 매쳐</Link> {/*조건: 2 단어 이상 */}
+            <div>
+                <Route path="/game/:name" component={GameMatcher} />
+            </div>
+        </BrowserRouter>
+```
+
+- 위의 GameMatcher에서 Route가 component의 props안에 *history, location, match*를 넣어준다.
+- 만약 연결이 안되어있는 컴포넌트에서 history, location, match를 쓰고 싶으면 *withRouter*를 import 받아와서 HOC 패턴으로 감싸주면 된다.
+  `export default withRouter(GameMatcher);`
+
+#### 3.location, match, history
+
+- history: 페이지 눈속임을 위해 메서드들을 제공한다. 페이지를 넘나드는 내역들을 간직하고 있다. 내장되어있는 함수들이 있어서 프로그래밍적으로 부를 수 있다. (push, go, goBack, goForward 등)
+- match: match안에 params 정보가 들어있다. params로 분기처리 등 할 수 있다.
+- location: 현재 주소 정보를 가지고 있다.
+
+- 브라우저 자체에서 제공해주는 history.pushState('', '', '/주소') API가 있다. 이 API로 리액트 라우터가 활용(의존관계)한거지만 우리는 리액트 라우터의 history 즉, this.props.history를 사용해야 한다.
+
+#### 4.쿼리스트링과 URLSearchParms
+
+- 쿼리스트링 : `<Link to="/game/number-baseball?query=10&hello=momo&bye=react">숫자야구</Link>` ?query=key=vaule 데이터 쌍이 여러개인 경우는 &로 구분한다. 이런식으로 주소에다가 데이터를 붙여줄 수 있다. 전달하면 서버에서도 응답한다.
+
+**URLSearchParams()로 파싱하기**
+
+```
+let urlSearchParams = new URLSearchParams(this.props.location.search.slice(1)); // slice(1) = ? slice
+        console.log(urlSearchParams.get('hello')); // momo
+```
+
+- [Hooks Route 연동 참조](https://reactrouter.com/web/`api/Hooks/usehistory)
 
 ### WebPack
 
@@ -362,8 +432,7 @@ npm i -D @babel/preset-react // React JSX로 변경
 npm i -D babel-loader // 바벨이랑 웹팩 연결
 npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D // 핫리로딩
 npm i -D webpack-dev-server // 데브서브
-npm i react-router
-npm i react-router-dom // web 만약 app이면 native 우리는 router-dom만 쓰면 되며, react-router는 dom이 필요로해서 설치
+npm i react-router-dom // web 만약 app이면 native 자동으로 react-router 설치
 ```
 
 ### 후기
