@@ -43,7 +43,6 @@ module.exports = {
     }, // 출력
 
     devServer: {
-        historyApiFallback: true,
         publicPath: '', 
         hot: true,
     }
